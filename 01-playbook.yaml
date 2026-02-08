@@ -1,7 +1,7 @@
-- name: Ping the server
+- name: Hello World
   hosts: web
   tasks:
-  - name: Ping the web server
+  - name: Hello
     ansible.builtin.debug:
       msg: "Hello World!" 
   
