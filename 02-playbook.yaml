@@ -3,5 +3,3 @@
   tasks:
   - name: Ping the server
     ansible.builtin.ping:
-      msg: "ping successfull to web" 
-  
