@@ -1,0 +1,8 @@
+ansible all -i 172.34.56.1, -e ansible_user=ec2-user -e ansible_passowrd=DevOps321 -m ping 
+-m == modules
+modules are nothing but commands in ansible also known as collections
+
+ansible all -i 174.129.46.61, -e ansible_user=ec2-user -e ansible_password=DevOps321 -m dnf -b -a "name=nginx state=installed"
+-b = become user
+-a = to pass the commands
+

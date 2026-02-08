@@ -1,0 +1,33 @@
+- name: "Vihari"
+  dob: "2001-02-18"
+  mobileNumber: 0384923420
+  addresses:
+  - flatNumber: 104
+    street: "gandhi nagar"
+    city: "visakhapatnam"
+    type: "current address"
+
+  - flatNumber: 104
+    street: "gandhi nagar"
+    city: "visakhapatnam"
+    type: "Permanent address"
+
+
+- name: "Dharani"
+  dob: "2000-06-25"
+  mobileNumber: 4974983294
+  addresses:
+  - flatNumber: 106
+    street: "nehru nagar"
+    city: "Eluru"
+    type: "current address"
+
+  - flatNumber: 104
+    street: "gandhi nagar"
+    city: "visakhapatnam"
+    type: "Permanent address"
+
+
+
+
+

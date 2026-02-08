@@ -1,0 +1,12 @@
+- name: Ping the server
+  hosts: web
+  become: yes
+  tasks:
+  - name: Install html package
+    ansible.builtin.package:
+      name: httpd
+      state: installed
+    notify:
+        - Start httpd
+      
+  
