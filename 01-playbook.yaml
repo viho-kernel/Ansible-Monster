@@ -2,11 +2,6 @@
   hosts: web
   become: yes
   tasks:
-  - name: Install html package
-    ansible.builtin.package:
-      name: httpd
-      state: installed
-    notify:
-        - Start httpd
-      
+  - name: ping the web server
+    ansible.builtin.ping:
   

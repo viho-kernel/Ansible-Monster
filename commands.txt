@@ -11,5 +11,17 @@ it will show only the modules under web.
 
 If you want to see all hosts in inventory.
 
-ansible all -i inventory.ini --list-hosts
+#ansible all -i inventory.ini --list-hosts
+
+#to see modules as graph
+ansible-inventory -i inventory.ini --graph
+@all:
+  |--@ungrouped:
+  |--@web:
+  |  |--172.31.19.80
+  |--@backed:
+  |  |--187.98.34.24
+  |--@graph:
+  |  |--13.187.98.76
+
 
