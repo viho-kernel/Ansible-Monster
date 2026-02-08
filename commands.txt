@@ -6,3 +6,10 @@ ansible all -i 174.129.46.61, -e ansible_user=ec2-user -e ansible_password=DevOp
 -b = become user
 -a = to pass the commands
 
+#ansible web -i inventory.ini --list-hosts
+it will show only the modules under web.
+
+If you want to see all hosts in inventory.
+
+ansible all -i inventory.ini --list-hosts
+
