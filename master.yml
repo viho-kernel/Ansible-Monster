@@ -5,8 +5,8 @@
   - name: Copy mongo file
     ansible.builtin.copy:
       src: mongo.repo
-      dest: /etc/yum.repos.d/mongo.rep
-      
+      dest: /etc/yum.repos.d/mongo.repo
+
   - name: Installing mongodb
     ansible.builtin.dnf:
       name: 
