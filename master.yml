@@ -2,6 +2,11 @@
   hosts: target
   become: yes
   tasks:
+  - name: Copy mongo file
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.rep
+      
   - name: Installing mongodb
     ansible.builtin.dnf:
       name: 
