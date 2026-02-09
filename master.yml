@@ -1,0 +1,31 @@
+- name: Configuring mongodb
+  hosts: target
+  become: yes
+  tasks:
+  - name: Installing mongodb
+    ansible.builtin.dnf:
+      name: 
+        - mongodb-org
+        - mongodb-org-server
+        - mongodb-org-mongos
+        - mongodb-org-shell
+        - mongodb-org-tools
+      state: present
+      update_cache: true
+
+  - name: enabling mongodb service
+    ansible.builtin.systemd_service:
+      name: mongod
+      state: started
+      enabled: yes
+  - name: Replacing address
+    ansible.builtin.replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+      backup: yes
+  
+  - name: Restarting mongod
+    ansible.builtin.systemd_service:
+      name: mongod
+      state: restarted
