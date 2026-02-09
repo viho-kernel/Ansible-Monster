@@ -1,0 +1,11 @@
+---
+- name: Configuring mongodb
+  hosts: target
+  become: yes
+  connection: local
+  tasks:
+    - name: Installing mongodb
+      ansible.butilin.dnf:
+         name: mongodb-org
+         state: present
+        
