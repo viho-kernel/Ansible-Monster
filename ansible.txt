@@ -1,0 +1,498 @@
+Preview
+
+Publish
+
+Add Cover
+
+Add Subtitle
+                                 ansible-playbook
+what are adhoc comands ?
+it is the command issued from ansible server targetting into node manually basically some emergenecy or adhoc purpose
+
+
+Plain Text
+
+
+- name: ansible to install nginx
+  hosts: web
+  become: yes
+  tasks:
+   - name: ansible to install nginx
+     ansible.builtin.package:
+       name: nginx
+       state: present
+
+Plain Text
+
+
+ansible-playbook -i inventory.ini play.yml
+what is the difference between play vs task
+
+Plain Text
+
+
+- name: Web server setup        # PLAY
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Install nginx      # TASK
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start nginx        # TASK
+      service:
+        name: nginx
+        state: started
+PLAY (Practical) TASK (Practical)
+play selects the servers while tasks performs an action. in a single play we can have multiple tasks
+
+play is a top level block in yaml where as task is inside play
+
+What is the purpose of hosts in a playbook?
+
+which servers this playbook want to execute
+
+why ansible is prefered over other configuration management tools ?
+
+ansible is configuration management and automation tool .ansible is agentless it doesnt require any extra software in managed node.ansible uses yaml. it is very easy to understand and write. ansible connected to worker nodes through ssh. ansible provides rich set of modules which we can use in our playbooks.it also provides community support
+
+in our project we use ansible to keep same configuration in all servers to avoid manual efforts
+
+memory map: agentless—>ssh—>yaml—— documentation
+
+why ansible is agentless ?
+ansible is agent less because it doesnot require any additional agent software on managed nodes
+
+instead ansible uses ssh,or winrm so target server need ssh access and python
+
+How does Ansible communicate with managed nodes?
+ansible connects to remote machines using ssh for linux and winrm for windows without installing any agent software
+
+What is idempotency and how does Ansible achieve it?
+Idempotency means running the same task multiple times gives the same result.
+
+In simple words:
+
+If work is already done → don’t do it again
+
+If work is not done → do it
+
+How does Ansible achieve idempotency? Ansible achieves idempotency using its modules.
+
+How it works (simple flow) You tell Ansible what you want (for example: “nginx should be installed”)
+
+Ansible runs the required module on the target server
+
+The module checks the current state of the server (asks the OS or package manager: “is nginx already installed?”)
+
+Based on the check:
+
+If already installed → Ansible skips
+
+If not installed → Ansible installs
+
+This check happens every time you run the playbook.
+
+Important points (no confusion) Ansible does NOT use a state file
+
+Ansible does NOT remember previous runs
+
+Every run is a fresh, live check
+
+Modules are responsible for:
+
+checking the state
+
+making changes if needed
+
+What are facts in Ansible?
+Facts are system variables collected from managed nodes and used for conditional and dynamic task execution.
+
+What is gather_facts and when would you disable it?
+gather_facts is a setting in Ansible that controls whether system information is collected from managed nodes.
+
+By default, Ansible gathers facts like OS, IP address, CPU, and memory using the setup module before running tasks.
+
+We disable gather_facts when the playbook does not need this information, mainly to improve performance and reduce execution time.
+
+What is the use of become?
+Some tasks need root access
+
+become allows Ansible to act as root (or another privileged user)
+
+What happens if gather_facts is disabled but fact variables are used?
+
+If gather_facts is disabled and fact variables are used, the playbook fails because those variables are not available.
+
+How do you limit task execution to only one host at a time?
+
+By using serial: 1 in the playbook.
+
+This tells Ansible to run all tasks on one host completely, and only after that move to the next host.
+
+Why does Ansible fail with “undefined variable” and how do you avoid it?
+
+Ansible fails with “undefined variable” when we try to use a variable that is not defined or not available at that point.
+
+If Ansible is agentless, how does it still manage thousands of servers reliably?
+
+Ansible is agentless, but it manages thousands of servers reliably because it uses standard SSH connections to communicate with servers only when needed.
+
+It connects to the servers, executes the required tasks, and disconnects. Since there is no agent running continuously on the servers, there are fewer failures and less maintenance.
+
+Ansible also runs tasks in parallel, which makes it scalable and efficient even in large environments.
+
+Why is serial preferred over stopping parallel execution completely?
+
+Story: 4 servers + 1 website You have 4 servers:
+
+Server 1
+
+Server 2
+
+Server 3
+
+Server 4
+
+All 4 servers are running the same website.
+
+Now you want to update the website using Ansible.
+
+Case 1 ❌: All servers at the same time (parallel) Ansible updates:
+
+Server 1
+
+Server 2
+
+Server 3
+
+Server 4
+
+All together at the same time.
+
+What happens? All servers restart together
+
+Website becomes DOWN
+
+👉 Problem: Users can’t access the website.
+
+Case 2 ❌: One server at a time (no parallel at all) Ansible updates:
+
+First Server 1 (wait)
+
+Then Server 2 (wait)
+
+Then Server 3 (wait)
+
+Then Server 4 (wait)
+
+What happens? Website stays UP ✅
+
+But update takes too much time ❌
+
+👉 Problem: Very slow deployment.
+
+Case 3 ✅: Using serial (THIS IS THE ANSWER) Let’s say:
+
+serial: 2 That means 2 servers at a time.
+
+What happens now? First:
+
+Server 1 & Server 2 update
+
+Then:
+
+Server 3 & Server 4 update
+
+Result: Some servers are always UP
+
+Website never goes down
+
+Update finishes faster than one-by-one
+
+👉 Best solution
+
+NOW the BIG QUESTION ❓ Why is serial preferred? ✅ Answer in very simple words Because serial does not stop parallel execution fully, but also does not allow all servers to update at once.
+
+Why is gather_facts enabled by default, and when should it be disabled?
+
+Why is gather_facts enabled by default? Because Ansible needs basic server information to run tasks correctly.
+
+When a playbook starts, Ansible collects details like:
+
+OS type
+
+IP address
+
+CPU and memory
+
+This information helps Ansible:
+
+Decide which tasks to run
+
+Apply the correct configuration for each server
+
+So by default, gather_facts is enabled to make playbooks work safely and correctly.
+
+what is check mode ?
+
+Check mode allows Ansible to run in dry-run mode to show what changes would happen without actually applying them.
+
+what is ansible playbook
+it is a list of plays which contains modules that can do a specific task
+
+write ansible playbook to install nginx and start the service
+
+
+Plain Text
+
+
+- name: installing nginx
+  hosts: servers
+  become: yes
+  tasks: 
+   - name: ansible to install a nginx 
+     ansible.builtin.package: 
+        name: nginx
+        state: present 
+   - name: ansible to start a service 
+     ansible.builtin.service: 
+        name: nginx
+        state: started
+- - syntax-check to check any synatxes
+
+* -- check for dry run
+
+* ansible-playbook play2.yml —syntax-check
+
+* ansible-playbook play2.yml - -check
+
+* Ansible always uses the inventory specified with the -i option first. If no inventory is specified, it falls back to the default inventory at /etc/ansible/hosts
+
+* write an ansible playbook install nginx and start the service and copy ur own index.html file into default location
+
+
+Plain Text
+
+
+- name: ansible to install a nginx 
+  hosts: 172.31.23.95
+  become: yes
+  tasks: 
+   - name: ansible to install nginx 
+     ansible.builtin.package: 
+         name: nginx
+         state: present 
+   - name: ansible to remove a default web page 
+     ansible.builtin.service: 
+       name: nginx
+       state: started 
+   - name: ansible to set home directory
+     ansible.builtin.copy: 
+         src: index.html
+         dest: /usr/share/nginx/html
+HANDLERS AND NOTIFY :
+
+install apache and start service
+
+
+Plain Text
+
+
+- name: instaling apache 
+  hosts: localhost
+  become: yes
+  tasks: 
+   - name: installing httpd 
+     ansible.builtin.package: 
+         name: httpd 
+         state: present
+     notify: start the service
+  handlers: 
+   - name: start the service 
+     ansible.builtin.service: 
+        name: httpd
+        state: started
+
+Plain Text
+
+
+- name: copying files
+  hosts: servers
+  become: yes
+  tasks:
+   - name: ansible to copy
+     ansible.builtin.copy: 
+        src: index.html
+        dest: /var/www/html/
+     notify: restart service 
+  handlers:
+   - name: restart service
+     ansible.builtin.service: 
+       name: httpd
+       state: started
+what are handlers and notify ?
+“Handlers are special tasks in Ansible that run only when notified. Notify is used inside a task to call the handler when a change happens. Handlers are mainly used to restart or reload services only when required.”
+
+“For example, if an nginx configuration file changes, the task notifies a handler to restart nginx.”
+
+4️⃣ Explain why we use it (business reason) Say 👇
+
+“This avoids unnecessary service restarts and saves time.”
+
+can i write ansible playbooks in json
+👉 Ansible supports both YAML and JSON formats
+👉 YAML is preferred because it is easy to read and write
+👉 JSON is mainly used by tools, not humans
+difference between pull based architecture vs push based architecture
+Push architecture means the control server pushes configuration to target servers. Pull architecture means target servers pull configuration from the central server.
+
+Push is better for fast control, Pull is better for security. Choice depends on environment.
+
+in push based architecture no agent in pull based architecture agent is required
+
+what is configuration management ?
+Configuration Management is the process of automatically maintaining the same configuration across all servers. Without it, manual changes cause configuration drift. Using tools like Ansible, we can ensure software like nginx is installed, configured, and running consistently on all servers. This improves consistency, automation, and reliability.
+
+what is the difference between adhoc commands vs playbook ?
+
+Ad-hoc commands are used when we want to do a small task immediately, like checking connectivity or restarting a service. Playbooks are used when we want to do proper automation, like installing and configuring software on multiple servers. Ad-hoc is mostly for temporary work, but playbooks are used in real projects and production.
+
+How do you run Ansible tasks with sudo / root access?
+👉 In Ansible, we use become to run tasks with sudo or root access.
+
+what is configuration drift how does ansible handle it ?
+Configuration drift means servers become different because of manual changes. Ansible handles it by running playbooks that bring servers back to the required state.
+
+How do you restart a service only when a configuration file changes?
+A playbook runs successfully but changes are not reflected — why?
+If a playbook runs successfully but changes are not reflected, it could be due to check mode, idempotent behavior, wrong inventory, skipped tasks, handlers not triggered, permission issues, wrong file path, or the service not being restarted.
+
+How do you skip a task for a particular server?
+To skip a task for a particular server, we use a when condition. Using inventory_hostname, we can exclude a specific server so the task is skipped only on that host.
+
+Plain Text
+
+
+- name: Practical example – skip task on one node
+  hosts: workers
+  tasks:
+
+    - name: Task 1 - runs on all nodes
+      command: echo "Task 1 running"
+
+    - name: Task 2 - should NOT run on node2
+      command: echo "Task 2 running"
+      when: inventory_hostname != "node2"
+
+    - name: Task 3 - runs on all nodes
+      command: echo "Task 3 running"
+How do you run tasks only for a specific OS (RHEL vs Ubuntu)?
+To run tasks only for a specific OS, we use Ansible facts with a when condition. By checking values like ansible_os_family or ansible_distribution, we can run tasks only on RHEL or Ubuntu systems.
+
+How do you avoid re-installing packages every time
+
+Ansible avoids re-installation through idempotency using state: present.
+
+ansible variables:
+
+Plain Text
+
+
+- name: ansible to install 
+  hosts: web
+  become: yes 
+  tasks: 
+   - name: ansible to install docker 
+     ansible.builtin.package: 
+         name: "{{ a }}" 
+         state: present
+ansible-playbook play11.yml —syntax-check
+ansible-playbook play11.yml —extra-vars “a=docker”
+ansible conditions:
+ansible tags:
+
+Plain Text
+
+
+- name: ansible to install a package
+  hosts: servers
+  become: yes
+  tasks:
+    - name: install git
+      ansible.builtin.package:
+        name: git
+        state: present
+      tags: a
+
+    - name: install docker
+      ansible.builtin.package:
+        name: docker
+        state: present
+      tags: b
+ansible-playbook tags.yml --syntax-check
+
+ansible-playbook tags.yml --tags a
+
+ansible-playbook tags.yml --skip-tags a
+
+ansible-playbook tags.yml --skip-tags b
+
+How would you handle different package managers (like apt for Debian-based systems and yum for RedHat-based systems) in a single playbook?
+
+“You have 10 production servers. You don’t want to run a risky task on all servers at once. You want to run it only on about 20% of the servers. How will you do this in Ansible?”
+“In Ansible, tasks are evaluated per host. To avoid running on all servers, I use a random condition so that each host has a small chance to execute the task. This way, only a small subset of servers runs the task, reducing risk.”
+
+: How does Ansible make sure that tasks run in the correct order?
+
+Ansible, tasks run one by one, in the exact order you write them in the playbook. For example, if you need to install a package and then start a service, you write the package installation task first, and then the service start task afterward. Ansible will make sure the second task only runs after the first one is done. This way, you don’t have to worry about tasks running out of order.
+
+Can you explain what Ansible handlers are, and how they differ from regular tasks? Also, when would you typically use
+
+what is the difference between ansbile roles vs ansible playbook ?
+“A playbook is a single YAML file where we define hosts and tasks. I usually use playbooks for simple or one-time automation because everything is in one place and easy to read.”
+
+“A role is a structured way of organizing playbooks. We split tasks, handlers, files, and templates into folders so the same setup can be reused across multiple playbooks or environments.”
+
+ANSIBLE ARCHITECTURE
+) ansible architecture ?
+
+“Ansible works in a very simple way.
+
+It has one main system called the Control Node, and many target systems called Managed Nodes.
+
+The Control Node is where Ansible is installed. From here, we run all the automation commands and playbooks.
+
+The Managed Nodes are the servers we want to control — like web servers or database servers. We don’t install Ansible on them.
+
+Ansible connects to these servers using SSH, so it is agentless, meaning it doesn’t need any extra software on those servers.
+
+All the server details are kept in an Inventory file. It is like a list that contains the IP addresses or hostnames of all managed nodes.
+
+The tasks we want to perform — like installing software, starting a service, or copying files — are written in a Playbook, which is a YAML file.
+
+Inside the playbook, Ansible uses small programs called Modules to do the actual work, for example the yum module to install packages or the service module to start services.
+
+When we run the playbook, Ansible:
+
+Reads the inventory to find servers,
+
+Connects to them using SSH,
+
+Runs the tasks one by one using modules,
+
+Then gives a report showing which tasks are successful and which failed.
+
+difference between command module vs shell module
+command: command module is for simple commands it will not get the shell environment shell: shell module is for complex like pipes and redirections .it will get shell environment
+what are all the modules you used in your project
+
+service ping debug user yum copy
+
+static inventory vs dynamic inventory
+
+“In Ansible, inventory can be static or dynamic. Static inventory means I manually define servers with IPs or hostnames in an inventory file. It is mainly used for small or stable environments. Dynamic inventory means Ansible automatically fetches the server list from cloud platforms like AWS or Azure, which is useful when servers are created or terminated dynamically.”
+
+/draft/695657dc51e9c8a52671ffac
