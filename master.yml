@@ -9,12 +9,7 @@
 
   - name: Installing mongodb
     ansible.builtin.dnf:
-      name: 
-        - mongodb-org
-        - mongodb-org-server
-        - mongodb-org-mongos
-        - mongodb-org-shell
-        - mongodb-org-tools
+      name: mongodb-org
       state: present
       update_cache: true
 
