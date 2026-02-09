@@ -3,6 +3,6 @@
   become: yes
   tasks:
   - name: Installing mongodb
-    ansible.butilin.dnf:
+    ansible.builtin.dnf:
       name: mongodb-org
       state: present
