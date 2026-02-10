@@ -1,6 +1,6 @@
 - name: play level variables
   hosts: Node-1
   tasks:
-  - name: print variables
-    ansible.builtin.debug:
-      msg: "Course is {{ COURSE }} and Name is {{ NAME }}" 
+    - name: print variables
+      ansible.builtin.debug:
+        msg: "Course is {{ COURSE }} and Name is {{ NAME }}"
