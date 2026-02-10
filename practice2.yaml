@@ -1,0 +1,16 @@
+- name: pring message
+  hosts: Node-1
+  become: yes
+  connection: local
+  tasks:
+  - name: installing nginx
+    ansible.builtin.package:
+      name: nginx
+      state: present
+  
+  - name: starting nginx service
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      enabled: yes
+      
