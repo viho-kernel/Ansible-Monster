@@ -1,0 +1,7 @@
+- name: play level variables
+  hosts: Node-1
+  become: yes
+  tasks:
+  - name: printing data
+    ansible.builtin.debug:
+       msg: "Installing {{ COURSE }} from {{ website }}"
