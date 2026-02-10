@@ -3,7 +3,6 @@
   connection: local
   vars_files:
   - filevars.yaml
-  
   tasks:
   - name: print variables
     vars:
