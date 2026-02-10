@@ -1,0 +1,62 @@
+- name: Configuring mongodb
+  hosts: target
+  become: yes
+  connection: local
+  tasks:
+  - name: Disabling Nodejs
+    ansible.builtin.dnf:
+      name: nodejs
+      enabled: no
+      state: absent
+  
+  - name: Enabling Nodejs:20
+    ansible.builtin.dnf:
+      name: nodejs:20
+      enabled: yes
+      state: present
+
+  - name: Instlling Nodejs
+    ansible.builtin.dnf:
+      name: Nodejs
+      state: present
+  
+  - name: adding user roboshop
+    ansible.builtin.user:
+      name: roboshop
+      system: yes
+      home: /app
+      shell: /sbin/nologin
+      comment: "roboshop system user"
+  - name: creatin app directory
+    ansible.builtin.file:
+      path: /app
+      
+  - name: Downloading code
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+      dest: /tmp/catalogue.zip
+  
+  - name: change to app directory
+    ansible.builtin.command: cd /app
+  
+  - name: remove existing files
+    ansible.builtin.shell: rm -rf /app/*
+  
+  - name: unziping all the code.
+    ansible.builtin.unarchive:
+      src: /tmp/catalogue.zip
+      dest: /app
+  
+  - name: insalling dependencies
+    community.general.npm:
+      path: /app
+      state: present
+  
+  - name: Copy mongo file
+    ansible.builtin.copy:
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+  
+
+
+  
