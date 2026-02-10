@@ -1,5 +1,5 @@
 - name: pring message
-  hosts: node-1
+  hosts: Node-1
   become: yes
   connection: local
   tasks:
