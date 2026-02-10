@@ -1,6 +1,5 @@
 - name: play level variables
-  hosts: local
-  connection: local
+  hosts: Node-1
   tasks:
   - name: print variables
     ansible.builtin.debug:
