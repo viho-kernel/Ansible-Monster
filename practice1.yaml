@@ -2,6 +2,8 @@
   hosts: Node-1
   become: yes
   connection: local
+  vars_files:
+  - file-vars.yaml
   tasks:
   - name: sending a message
     ansible.builtin.debug:
