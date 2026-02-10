@@ -1,5 +1,5 @@
 - name: play level variables
-  hosts: local
+  hosts: Node-1
   connection: local
   tasks:
   - name: print variables
