@@ -4,4 +4,4 @@
   tasks:
   - name: printing data
     ansible.builtin.debug:
-       msg: "Installing {{ COURSE }} from {{ website }}"
+       msg: "Installing {{ COURSE }} from website"
