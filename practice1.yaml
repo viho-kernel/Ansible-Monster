@@ -1,0 +1,8 @@
+- name: pring message
+  hosts: node-1
+  become: yes
+  connection: local
+  tasks:
+  - name: sending a message
+    ansible.builtin.debug:
+      msg: "Hi from hello world!"
