@@ -1,10 +1,8 @@
 - name: play level variables
   hosts: local
   connection: local
-  vars:
-    COURSE: "Devops with AWS"
-    TRAINER: "VIHARI"
-    DURATIOIN: 140
+  vars_files:
+  - file-vars.yaml
   
   tasks:
   - name: print variables
