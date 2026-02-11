@@ -12,4 +12,4 @@
   - name: Program did not work 
     ansible.builtin.debug: 
       msg: "Program didn't work because number is {{ number }}" 
-      when: number | int >= 10
+    when: number | int >= 10
