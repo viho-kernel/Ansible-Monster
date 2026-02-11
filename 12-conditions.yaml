@@ -6,4 +6,4 @@
     vars:
       name: "Vihari"
     ansible.builtin.debug:
-      msg: Name of the person is "{{ name }}"
+      msg: Name of the person is {{ name }}
