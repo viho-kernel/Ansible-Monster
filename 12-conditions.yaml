@@ -1,9 +1,12 @@
 - name: when conditions
   connection: local
   hosts: local
+  vars:
+    IS_LIVE: false
   tasks:
   - name: when conditions
     vars:
       name: "Vihari"
     ansible.builtin.debug:
       msg: Name of the person is {{ name }}
+    when: IS_LIVE
