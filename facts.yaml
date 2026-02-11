@@ -4,6 +4,9 @@
 
   tasks:
   - name: Gathering all the facts
-    ansible.builtin.debug:
-      msg: "{{ ansible_facts }}"
-    register: ansible_facts
+    ansible.builtin.shell: cat /etc/passwd
+    register: output
+  
+  - name: print output
+    debug:
+      msg: "{{ output.stdout }}"
