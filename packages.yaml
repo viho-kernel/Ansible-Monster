@@ -5,9 +5,9 @@
   tasks:
   - name: Installing Packages
     ansible.builtin.package:
-      name: "{{ item }}"
-      state: present
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
     loop:
-      - nginx
-      - mysql
-      - http
+      - { name: "nginx", state: "absent" }
+      - { name: "httpd", state: "present" }
+      - { name: "mysql", state: "absent" }
