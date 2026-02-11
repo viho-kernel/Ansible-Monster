@@ -6,14 +6,4 @@
   - name: Gathering all the facts
     ansible.builtin.debug:
       msg: "{{ ansible_facts }}"
-  
-  - name: Check RedHAT or not
-    ansible.builtin.debug:
-      msg: "Yes, It's RedHAT"
-    when: ansible_facts.os_family == "RedHat"
-
-  - name: Check Amazon or not
-    ansible.builtin.debug:
-      msg: "{{ ansible_facts.nodename }}"
-    
-   
+    register: ansible_facts
