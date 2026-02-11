@@ -15,5 +15,5 @@
   
   - name: split
     ansible.builtin.debug:
-      msg: '{{ TOPICS | split }}'
+      msg: '{{ TOPICS | split (,) }}'
 
