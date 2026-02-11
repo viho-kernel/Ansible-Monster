@@ -1,0 +1,23 @@
+- name: Data Types
+  hosts: local
+  connection: local
+  vars:
+    PROGRAM: "DevSecOps with AWS"
+    DURATION: 140
+    IS_LIVE: true
+    DETAILS:
+       MONTHS: 4
+       TRAINER: "Siva"
+    TOPICS:
+    - Linux
+    - Shell
+    - Ansible
+  taks:
+  - name: print avriables
+    ansible.builtin.debug:
+      msg:
+        program: {{ PROGRAM }}
+        Duration: {{ DURATION }}
+        IS_LIVE?: {{ IS_LIVE }}
+        Details: {{ DETAILS }}
+        TOPICS: {{ TOPICS }}
