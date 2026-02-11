@@ -1,0 +1,8 @@
+- name: when conditions
+  connection: local
+  hosts: local
+  become: yes
+  tasks:
+  - name: Greeting
+  ansible.builtin.debug:
+    msg: 'Hi Vihari, {{ GREETING }}'
