@@ -16,8 +16,8 @@
   - name: print avriables
     ansible.builtin.debug:
       msg:
-        program: {{ PROGRAM }}
-        Duration: {{ DURATION }}
-        IS_LIVE?: {{ IS_LIVE }}
-        Details: {{ DETAILS }}
-        TOPICS: {{ TOPICS }}
+        program: "{{ PROGRAM }}"
+        Duration: "{{ DURATION }}"
+        IS_LIVE?: "{{ IS_LIVE }}"
+        Details: "{{ DETAILS }}"
+        TOPICS: "{{ TOPICS }}"
