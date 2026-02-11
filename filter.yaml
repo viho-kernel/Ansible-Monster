@@ -12,3 +12,8 @@
   - name: Greeting
     ansible.builtin.debug:
       msg: 'Hi Vihari, {{ GREETING }}'
+  
+  - name: split
+    ansible.builtin.debug:
+      msg: '{{ TOPICS | split }}'
+
