@@ -3,11 +3,7 @@
   hosts: local
   become: yes
   vars:
-    TOPICS:
-    - Linux
-    - Shell
-    - Ansible
-    - Terraform
+    TOPICS: Linux, Shell, Ansible, Terraform
   tasks:
   - name: Greeting
     ansible.builtin.debug:
@@ -15,5 +11,5 @@
   
   - name: split
     ansible.builtin.debug:
-      msg: '{{ TOPICS | split (,) }}'
+      msg: '{{ TOPICS | split (",") }}'
 
