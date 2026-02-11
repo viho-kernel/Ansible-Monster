@@ -10,5 +10,5 @@
     - Terraform
   tasks:
   - name: Greeting
-  ansible.builtin.debug:
+    ansible.builtin.debug:
     msg: 'Hi Vihari, {{ GREETING }}'
