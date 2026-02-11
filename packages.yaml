@@ -1,5 +1,6 @@
 - name: demo on loops
   connection: local
+  become: yes
   hosts: Node-1
   tasks:
   - name: Installing Packages
