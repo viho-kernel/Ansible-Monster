@@ -2,6 +2,12 @@
   connection: local
   hosts: local
   become: yes
+  vars:
+    TOPICS:
+    - Linux
+    - Shell
+    - Ansible
+    - Terraform
   tasks:
   - name: Greeting
   ansible.builtin.debug:
