@@ -1,7 +1,7 @@
 - name: checking conditions
   hosts: Node-1
   vars:
-    number: 1
+    number: 19
   tasks:
   - name: Checking whether program run or not
     ansible.builtin.debug:
