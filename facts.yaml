@@ -5,5 +5,5 @@
   tasks:
   - name: Gathering all the facts
     ansible.builtin.debug:
-      msg: Printing the facts {{ ansible_facts }}
+      msg: "{{ ansible_facts }}"
    
