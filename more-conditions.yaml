@@ -1,5 +1,5 @@
 - name: checking conditions
-  hosts: Node-1
+  hosts: all
   vars:
     number: 19
   tasks:
