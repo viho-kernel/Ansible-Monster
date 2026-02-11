@@ -1,0 +1,11 @@
+- name: demo on loops
+  connection: local
+  hosts: Node-1
+  tasks:
+  - name: Trying loops
+    ansible.builtin.debug:
+      msg: "Hello {{ item }}"
+    loop:
+    - VIHARI
+    - DHARANI
+    - VIOLET
