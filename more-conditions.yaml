@@ -7,4 +7,9 @@
     ansible.builtin.debug:
       msg: Printing message {{ number }}
       
-    when: number < 10
+    when: number | int < 10
+
+  - name: Program did not work 
+    ansible.builtin.debug: 
+      msg: "Program didn't work because number is {{ number }}" 
+      when: number | int >= 10
