@@ -1,6 +1,5 @@
 - name: checking conditions
   hosts: Node-1
-  connection: Node-1
   vars:
     number: 1
   tasks:
