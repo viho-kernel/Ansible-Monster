@@ -6,7 +6,7 @@
   - name: creating user
     ansible.builtin.user:
       name: dharani
-      create_home: yess
+      create_home: yes
       home: /app
       shell: /sbin/nologin
       group: vihari
