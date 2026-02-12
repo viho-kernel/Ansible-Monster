@@ -10,7 +10,7 @@
 
   - name: printing user_output
     ansible.builtin.debug:
-      msg: {{ user_output }}
+      msg: "{{ user_output }}"
   
   - name: creating user
     ansible.builting.command: useradd vihari
