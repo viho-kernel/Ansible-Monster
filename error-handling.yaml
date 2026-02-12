@@ -15,3 +15,5 @@
   - name: creating user
     ansible.builtin.command: useradd vihari
     when: user_output.rc != 0
+
+  
