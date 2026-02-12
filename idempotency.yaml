@@ -1,0 +1,13 @@
+- name: checking user
+  connection: local
+  hosts: local
+  become: yes
+  tasks:
+  - name: creating user
+    ansible.builtin.user:
+      name: dharani
+      create_home: yess
+      home: /app
+      shell: /sbin/nologin
+      group: vihari
+
