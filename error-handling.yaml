@@ -13,5 +13,5 @@
       msg: "{{ user_output }}"
   
   - name: creating user
-    ansible.builting.command: useradd vihari
+    ansible.builtin.command: useradd vihari
     when: user_output.rc != 0
