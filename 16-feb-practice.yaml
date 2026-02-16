@@ -1,0 +1,18 @@
+- name: Installing Python
+  hosts: localhost
+  become: yes
+  tasks:
+  - name: Check if Python 3 is installed
+    ansible.builtin.raw: which python3
+    register: python_check
+    ignore_errors: yes
+    changed_when: false
+
+  - name: Installing Python
+    ansible.builtin.debug:
+      msg: Installing Python
+  - name: Python Installation
+    ansible.builtin.dnf:
+      name: python3
+      state: present
+    when: python_check.rc != 0
