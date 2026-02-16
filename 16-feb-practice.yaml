@@ -10,6 +10,7 @@
   
   - name: cheecking status
     ansible.builtin.meta: end_host
+    ansible.builtin.command: "Skipping rest of executing as alreay python3 is insatlled."
     when: python_check.rc == 0
   
 
