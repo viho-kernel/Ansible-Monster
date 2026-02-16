@@ -7,6 +7,11 @@
     register: python_check
     ignore_errors: yes
     changed_when: false
+  
+  - name: cheecking status
+    ansible.builtin.meta: end_host
+    when: python_check.rc == 0
+  
 
   - name: Installing Python
     ansible.builtin.debug:
